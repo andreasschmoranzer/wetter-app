@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap");
+
+$primary-color: rgb(34, 88, 127);
+
+$border-radius: 1rem;
+$border-bottom: 0.5px solid white;
+
+$primary-font-family: "Google Sans Flex", sans-serif;
+
+@mixin boxContainer() {
+  width: 90%;
+  margin: 0 auto 2rem auto;
+  padding: 1rem 0;
+}
+
+@mixin boxDesign() {
+  background-color: $primary-color;
+  border-radius: $border-radius;
+  box-shadow: 0.5px 3px 8px rgba(23, 23, 23, 0.42);
+}
+
+@mixin boxInnerContentMargin() {
+  margin: 0 1rem;
+}
+
+@mixin boxHeading() {
+  border-bottom: $border-bottom;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+@mixin tabletAndMore() {
+  @media only screen and (min-width: 600px) {
+    @content;
+  }
+}
