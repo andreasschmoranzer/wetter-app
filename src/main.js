@@ -1,29 +1,21 @@
 import "../styles/styles.scss";
-import { fetchApi } from "./fetching.js";
+import { fetchApiWeatherForecast } from "./fetching";
 
-const appContainerEl = document.querySelector("#app");
-const dashoboardEl = document.querySelector(".dashboard");
-const locationInputEl = document.querySelector(".input-location");
+const weatherAppEl = document.querySelector("#app");
 
-locationInputEl.addEventListener("change", () => getSelectedLocation());
+showEnteredLocation();
 
-async function getSelectedLocation() {
-  // receive the selected location
-  let selectedLocation = locationInputEl.value;
+async function showEnteredLocation() {
+  let enteredLocation = "München";
 
-  //  generating the relevant weather data
-  let relevantWeatherdata = await fetchApi(currentLocation);
+  const weatherData = await fetchApiWeatherForecast(enteredLocation);
 
-  // display the weather information for the desired location
-  displayWeatherInformation();
-
-  return relevantWeatherdata;
+  displayWeatherData(weatherData);
 }
 
-function displayWeatherInformation() {
-  dashoboardEl.remove();
-
-  let html = `<div class="actions">
+function displayWeatherData(weatherData) {
+  let html = `
+  <div class="actions">
         <button class="actions__arrow">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -40,14 +32,14 @@ function displayWeatherInformation() {
             />
           </svg>
         </button>
-        <button class="navbar__favorites">
+        <button class="actions__favorites">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="navbar__favorites-icon"
+            class="actions__favorites-icon"
           >
             <path
               stroke-linecap="round"
@@ -58,12 +50,16 @@ function displayWeatherInformation() {
         </button>
       </div>
       <div class="current-weather">
-        <h2 class="current-weather__location">Rosenheim</h2>
-        <p class="current-weather__current-temperature">16°</p>
-        <p class="current-weather__current-status">Klar</p>
+        <h2 class="current-weather__location">${weatherData.location.name}</h2>
+        <p class="current-weather__current-temperature">${Math.floor(weatherData.current.temp_c)}°</p>
+        <p class="current-weather__current-status">${weatherData.current.condition.text}</p>
         <div class="current-weather__temperatures">
-          <p class="current-weather__max-temperature">H: 18°</p>
-          <p class="current-weather__min-temperature">T: 1°</p>
+          <p class="current-weather__max-temperature">H: ${Math.floor(
+            weatherData.forecast.forecastday[0].day.maxtemp_c,
+          )}°</p>
+          <p class="current-weather__min-temperature">T: ${Math.floor(
+            weatherData.forecast.forecastday[0].day.mintemp_c,
+          )}°</p>
         </div>
       </div>
       <div class="todays-forecast">
@@ -151,7 +147,8 @@ function displayWeatherInformation() {
           <p class="weather-detail__key">UV-Index</p>
           <p class="weather-detail__value">0</p>
         </div>
-      </div>`;
+      </div>
+  `;
 
-  appContainerEl.innerHTML = html;
+  weatherAppEl.innerHTML = html;
 }

@@ -14,9 +14,10 @@ $primary-font-family: "Google Sans Flex", sans-serif;
 }
 
 @mixin boxDesign() {
-  background-color: $primary-color;
   border-radius: $border-radius;
-  box-shadow: 0.5px 3px 8px rgba(23, 23, 23, 0.42);
+  box-shadow: 0.5px 1px 10px rgba(23, 23, 23, 0.2);
+  //-webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(50px);
 }
 
 @mixin boxInnerContentMargin() {
