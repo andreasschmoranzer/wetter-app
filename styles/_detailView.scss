@@ -1,0 +1,19 @@
+.current-weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  //ggf. dann wieder rausnehmen.
+  padding-top: 2rem;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 3px rgb(0, 0, 0);
+
+  &__location {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  &__current-temperature {
+    font-size: 4rem;
+  }
+}

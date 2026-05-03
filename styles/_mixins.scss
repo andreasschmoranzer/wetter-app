@@ -1,0 +1,25 @@
+@use "variables" as *;
+
+@mixin boxContainer() {
+  width: calc(90% - 2rem);
+  margin: 0 auto 2rem auto;
+  padding: 1rem 1rem;
+}
+
+@mixin boxDesign() {
+  border-radius: $border-radius;
+  box-shadow: 0.5px 1px 10px rgba(23, 23, 23, 0.2);
+  backdrop-filter: blur(50px);
+}
+
+@mixin boxHeading() {
+  border-bottom: $border-bottom;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+@mixin tabletAndMore() {
+  @media only screen and (min-width: 600px) {
+    @content;
+  }
+}
