@@ -21,7 +21,7 @@ export function formatLocalTime(currentTime) {
   return timeAndDateFormat;
 }
 
-function twoDigits(value) {
+export function twoDigits(value) {
   if (value < 10) {
     value = "0" + value;
   } else {

@@ -15,7 +15,7 @@ function renderDetailView(weatherData) {
   const { location, current, forecast } = weatherData;
   const currentDay = forecast.forecastday[0];
 
-  const hourlyForecast = getHourlyForecast(location, currentDay, forecast);
+  const hourlyForecast = getHourlyForecast(location, forecast);
 
   rootEl.innerHTML = displayDetailView(
     location.name,

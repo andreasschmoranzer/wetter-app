@@ -1,63 +1,44 @@
-import { formatLocalTime, formatTemperature } from "./utils";
+import { formatLocalTime, formatTemperature, twoDigits } from "./utils";
 
-const REQUIRED_DAILY_FORECAST_LENGTH = 24;
+const HOURLY_FORECAST_LIST_LENGTH = 24;
 
-export function getHourlyForecast(location, currentDay, forecast) {
+export function getHourlyForecast(location, forecast) {
+  const hourlyForecastList = [];
   const localTime = formatLocalTime(location.localtime);
 
-  const forecastDays = forecast.forecastday;
-  const filteredForecastDays = forecastDays.filter(
-    (day) => day.date !== currentDay.date,
-  );
+  const multiDaysForecastList = forecast.forecastday;
 
-  const hoursOfCurrentDay = currentDay.hour;
+  const multiDaysHourlyForecastList = [];
 
-  const indexLocalTime = hoursOfCurrentDay.findIndex((hour) => {
+  for (let i = 0; i < multiDaysForecastList.length; i++) {
+    const hourlyForecast = multiDaysForecastList[i].hour;
+    hourlyForecast.forEach((item) => {
+      multiDaysHourlyForecastList.push(item);
+      return multiDaysHourlyForecastList;
+    });
+  }
+
+  const indexLocalTime = multiDaysHourlyForecastList.findIndex((hour) => {
     return hour.time === localTime;
   });
 
-  let dailyForecast = [];
-  let hourlyForecastData = {};
+  multiDaysHourlyForecastList.splice(0, indexLocalTime);
 
-  for (let i = indexLocalTime; i < hoursOfCurrentDay.length; i++) {
-    createHourlyForecastData(
-      hoursOfCurrentDay[i],
-      hourlyForecastData,
-      dailyForecast,
-    );
+  for (let i = 0; i < HOURLY_FORECAST_LIST_LENGTH; i++) {
+    const date = new Date(multiDaysHourlyForecastList[i].time);
+
+    const hourlyForecastData = {
+      date: formatLocalTime(date),
+      hour: twoDigits(date.getHours()) + " Uhr",
+      temperature: formatTemperature(multiDaysHourlyForecastList[i].temp_c),
+      icon: "https:" + multiDaysHourlyForecastList[i].condition.icon,
+    };
+
+    hourlyForecastList.push(hourlyForecastData);
   }
 
-  for (let i = 0; dailyForecast.length < REQUIRED_DAILY_FORECAST_LENGTH; i++) {
-    let index = 0;
-    if (filteredForecastDays[index].length === 0) {
-      index++;
-    } else {
-      const forecastDaysHours = filteredForecastDays[index].hour;
-      createHourlyForecastData(
-        forecastDaysHours[i],
-        hourlyForecastData,
-        dailyForecast,
-      );
-    }
-  }
+  const currentTime = "Jetzt";
+  hourlyForecastList[0].hour = currentTime;
 
-  return dailyForecast;
-}
-
-function createHourlyForecastData(weatherData, forecastObject, forecastList) {
-  const date = new Date(weatherData.time);
-
-  forecastObject = {
-    date: formatLocalTime(date),
-    hour: date.getHours() + " Uhr",
-    temperature: formatTemperature(weatherData.temp_c),
-    icon: "https:" + weatherData.condition.icon,
-  };
-
-  forecastList.push(forecastObject);
-
-  const currentHour = "Jetzt";
-  forecastList[0].hour = currentHour;
-
-  return forecastList;
+  return hourlyForecastList;
 }
