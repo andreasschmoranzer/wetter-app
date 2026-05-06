@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 .current-weather {
   display: flex;
   flex-direction: column;
@@ -15,5 +17,44 @@
 
   &__current-temperature {
     font-size: 4rem;
+  }
+}
+
+.todays-forecast {
+  @include cardContainer();
+  @include cardDesign();
+
+  &__summary {
+    @include cardHeading();
+  }
+
+  &__hours {
+    width: 100%;
+    display: flex;
+    gap: 0.8rem;
+    overflow-x: auto;
+  }
+}
+
+.hourly-forecast {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.three-days-forecast {
+  @include cardContainer();
+  @include cardDesign();
+
+  &__title {
+    @include cardHeading();
+  }
+
+  &__days {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 }

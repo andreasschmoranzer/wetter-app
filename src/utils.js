@@ -8,7 +8,6 @@ export function formatWindSpeed(windSpeed) {
 
 export function formatLocalTime(currentTime) {
   const localTime = new Date(currentTime);
-  // dateFormat YYYY-MM-DD HH:MM
 
   const year = localTime.getFullYear();
   const month = twoDigits(localTime.getMonth() + 1);

@@ -1,21 +1,22 @@
 @use "variables" as *;
 
-@mixin boxContainer() {
+@mixin cardContainer() {
   width: calc(90% - 2rem);
   margin: 0 auto 2rem auto;
   padding: 1rem 1rem;
 }
 
-@mixin boxDesign() {
+@mixin cardDesign() {
   border-radius: $border-radius;
   box-shadow: 0.5px 1px 10px rgba(23, 23, 23, 0.2);
   backdrop-filter: blur(50px);
 }
 
-@mixin boxHeading() {
+@mixin cardHeading() {
+  width: 100%;
   border-bottom: $border-bottom;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
+  padding-bottom: $card-heading-gap;
+  margin-bottom: $card-heading-gap;
 }
 
 @mixin tabletAndMore() {

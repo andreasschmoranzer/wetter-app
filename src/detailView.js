@@ -2,7 +2,7 @@ import { getCurrentWeatherAndForecast } from "./api";
 import { rootEl } from "./main";
 import { formatTemperature, formatWindSpeed } from "./utils";
 import { renderLoadingScreen } from "./loadingScreen";
-import { getForecastPerHour } from "./ForecastPerHour";
+import { getHourlyForecast } from "./hourlyForecast";
 
 export async function loadDetailView(enteredLocation) {
   renderLoadingScreen("Lade das Wetter für " + enteredLocation + "...");
@@ -12,11 +12,10 @@ export async function loadDetailView(enteredLocation) {
 }
 
 function renderDetailView(weatherData) {
-  // destructuring Schreibweise.
   const { location, current, forecast } = weatherData;
   const currentDay = forecast.forecastday[0];
 
-  getForecastPerHour(location, currentDay, forecast);
+  const hourlyForecast = getHourlyForecast(location, currentDay, forecast);
 
   rootEl.innerHTML = displayDetailView(
     location.name,
@@ -26,6 +25,7 @@ function renderDetailView(weatherData) {
     formatTemperature(currentDay.day.mintemp_c),
     currentDay.day.condition.text,
     formatWindSpeed(currentDay.day.maxwind_kph),
+    hourlyForecast,
   );
 }
 
@@ -37,6 +37,7 @@ function displayDetailView(
   minTemp,
   forecastCondition,
   maxWindSpeed,
+  hourlyForecast,
 ) {
   return `
       <div class="current-weather">
@@ -51,32 +52,20 @@ function displayDetailView(
       <div class="todays-forecast">
         <p class="todays-forecast__summary">Heute ${forecastCondition}. Wind bis zu ${maxWindSpeed} km/h.</p>
         <div class="todays-forecast__hours">
-          <div class="hourly-forecast">
-            <p class="hourly-forecast__time">Jetzt</p>
-            <p class="hourly-forecast__icon">X</p>
-            <p class="hourly-forecast__temperature">19°</p>
-          </div>
-          <div class="hourly-forecast">
-            <p class="hourly-forecast__time">21 Uhr</p>
-            <p class="hourly-forecast__icon">X</p>
-            <p class="hourly-forecast__temperature">19°</p>
-          </div>
-          <div class="hourly-forecast">
-            <p class="hourly-forecast__time">22 Uhr</p>
-            <p class="hourly-forecast__icon">X</p>
-            <p class="hourly-forecast__temperature">19°</p>
-          </div>
-          <div class="hourly-forecast">
-            <p class="hourly-forecast__time">23 Uhr</p>
-            <p class="hourly-forecast__icon">X</p>
-            <p class="hourly-forecast__temperature">19°</p>
-          </div>
-          <div class="hourly-forecast">
-            <p class="hourly-forecast__time">00 Uhr</p>
-            <p class="hourly-forecast__icon">X</p>
-            <p class="hourly-forecast__temperature">19°</p>
-          </div>
+        ${displayHourlyForecast(hourlyForecast)}
         </div>
       </div>
   `;
+}
+
+function displayHourlyForecast(hourelyForecastList) {
+  let html = "";
+  hourelyForecastList.forEach((hour) => {
+    html += `<div class="hourly-forecast">
+              <p class="hourly-forecast__time">${hour.hour}</p>
+              <img src="${hour.icon}" class="hourly-forecast__icon"/>
+              <p class="hourly-forecast__temperature">${hour.temperature}°</p>
+            </div>`;
+  });
+  return html;
 }
