@@ -1,31 +1,47 @@
-export function formatTemperature(temperature) {
-  return Math.floor(temperature);
+export function roundOff(value) {
+  return Math.floor(value);
 }
 
-export function formatWindSpeed(windSpeed) {
-  return Math.floor(windSpeed);
-}
+export function get24HourForecast(location, forecast) {
+  const NEW_FORECAST_LIST_LENGTH = 24;
+  const newForecastList = [];
 
-export function formatLocalTime(currentTime) {
-  const localTime = new Date(currentTime);
+  const localTime = location.localtime;
 
-  const year = localTime.getFullYear();
-  const month = twoDigits(localTime.getMonth() + 1);
-  const day = twoDigits(localTime.getDate());
-  const hours = twoDigits(localTime.getHours());
-  const minutes = "00";
+  const time = localTime.split(":");
+  time.splice(1, 1);
+  const formatLocalTime = time + ":00";
 
-  const timeAndDateFormat =
-    year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+  const mulitDaysForecastList = forecast.forecastday;
+  const mergedMultiDaysForecastList = [];
 
-  return timeAndDateFormat;
-}
-
-export function twoDigits(value) {
-  if (value < 10) {
-    value = "0" + value;
-  } else {
-    value = value;
+  for (let i = 0; i < mulitDaysForecastList.length; i++) {
+    const hourlyForecast = mulitDaysForecastList[i].hour;
+    hourlyForecast.forEach((item) => {
+      mergedMultiDaysForecastList.push(item);
+      return mergedMultiDaysForecastList;
+    });
   }
-  return value;
+
+  const indexLocalTime = mergedMultiDaysForecastList.findIndex((hour) => {
+    return hour.time === formatLocalTime;
+  });
+
+  mergedMultiDaysForecastList.splice(0, indexLocalTime);
+
+  for (let i = 0; i < NEW_FORECAST_LIST_LENGTH; i++) {
+    const date = mergedMultiDaysForecastList[i].time.split(" ");
+    const hour = date[1].split(":");
+
+    const hourlyForecastElements = {
+      time: mergedMultiDaysForecastList[i].time,
+      hour: hour[0],
+      temperature: roundOff(mergedMultiDaysForecastList[i].temp_c),
+      icon: mergedMultiDaysForecastList[i].condition.icon,
+    };
+
+    newForecastList.push(hourlyForecastElements);
+  }
+
+  return newForecastList;
 }
