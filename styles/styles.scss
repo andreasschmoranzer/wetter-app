@@ -73,6 +73,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  &__action {
+    cursor: pointer;
+  }
 }
 
 .main-menu__input {
@@ -95,17 +99,57 @@ body {
   gap: 1rem;
 }
 
-.favorite-place {
-  background: url("public/starry_sky.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  padding: 1rem;
-  border-radius: $border-radius;
-  height: 7rem;
+.favorite-item {
+  width: 100%;
+  height: 8rem;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  gap: 1rem;
 
+  &__action {
+    min-width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &--disabled {
+      display: none;
+    }
+  }
+
+  &__location-data {
+    background: url("public/starry_sky.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 1rem;
+    border-radius: $border-radius;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.delete-action {
+  border: 2px solid rgb(217, 0, 0);
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__icon {
+    background-color: rgb(217, 0, 0);
+    border-radius: $border-radius;
+    width: 0.8rem;
+    height: 0.2rem;
+  }
+}
+
+.favorite-place {
   &__location-and-status,
   &__temperatures {
     display: flex;

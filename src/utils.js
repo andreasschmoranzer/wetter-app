@@ -58,8 +58,6 @@ export function formatDay(currentDate) {
   const date = new Date(currentDate);
   const dayEl = date.getDay();
 
-  console.log(dayEl);
-
   let days = [
     "Sonntag",
     "Montag",

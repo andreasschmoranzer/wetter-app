@@ -1,5 +1,6 @@
 import { getCurrentWeatherAndForecast } from "./api";
-import { rootEl, displayMainMenu } from "./main";
+import { rootEl } from "./main";
+import { displayMainMenu } from "./mainMenu";
 import { roundOff } from "./utils";
 import { renderLoadingScreen } from "./loadingScreen";
 import { get24HourForecast, formatDay, formatTime } from "./utils";
@@ -9,14 +10,12 @@ export async function loadDetailView(enteredLocation) {
   renderLoadingScreen("Lade das Wetter für " + enteredLocation + "...");
 
   const weatherData = await getCurrentWeatherAndForecast(enteredLocation);
-  console.log(weatherData);
   renderDetailView(weatherData);
 }
 
 function renderDetailView(weatherData) {
   const { location, current, forecast } = weatherData;
   const currentDay = forecast.forecastday[0];
-  console.log(currentDay);
 
   rootEl.innerHTML =
     displayActionButtons() +
