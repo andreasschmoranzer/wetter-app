@@ -58,21 +58,15 @@ export function formatDay(currentDate) {
   const date = new Date(currentDate);
   const dayEl = date.getDay();
 
-  let days = [
-    "Sonntag",
-    "Montag",
-    "Dienstag",
-    "Mittwoch",
-    "Donnerstag",
-    "Freitag",
-    "Samstag",
-  ];
+  const days = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 
-  let day = days.filter((element, index) => {
+  return days[dayEl];
+
+  /* let day = days.filter((element, index) => {
     return (element, index === dayEl);
   });
 
-  return day;
+  return day; */
 }
 
 export function formatTime(currentTime) {
@@ -84,4 +78,6 @@ export function formatTime(currentTime) {
   const merchedTime = hour + ":" + minutes;
 
   return merchedTime;
+
+  // const [hour, minutes] = timeWithoutSuffix.split(":"); zb. 09:32 die erste Zahl wird in der Variable hour gespeichert und die zweite in der Variable minutes.
 }

@@ -9,7 +9,7 @@
 @mixin cardDesign() {
   border-radius: $border-radius;
   box-shadow: 0.5px 1px 10px rgba(23, 23, 23, 0.2);
-  backdrop-filter: blur(50px);
+  backdrop-filter: blur(40px);
 }
 
 @mixin cardHeading() {

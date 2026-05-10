@@ -10,6 +10,7 @@ export async function loadDetailView(enteredLocation) {
   renderLoadingScreen("Lade das Wetter für " + enteredLocation + "...");
 
   const weatherData = await getCurrentWeatherAndForecast(enteredLocation);
+  console.log(weatherData);
   renderDetailView(weatherData);
 }
 
@@ -123,10 +124,10 @@ function displayHourlyForecast(
   return html;
 }
 
-function displayThreeDaysForecast(forecastDays) {
+function displayThreeDaysForecast(forecastDaysElements) {
   let forecastPerDay = "";
 
-  forecastDays
+  forecastDaysElements
     .filter((el) => el !== undefined)
     .forEach((day, i) => {
       forecastPerDay += `
@@ -135,14 +136,14 @@ function displayThreeDaysForecast(forecastDays) {
         <img src="${"https:" + day.day.condition.icon}" class="daily-forecast__icon"/>
         <p class="daily-forecast__max-temperature">H: ${roundOff(day.day.maxtemp_c) + "°"}</p>
         <p class="daily-forecast__min-temperature">T: ${roundOff(day.day.mintemp_c) + "°"}</p>
-        <p class="daily-forecast__wind">Wind: ${roundOff(day.day.maxwind_kph) + " km/h"}</p>
+        <p class="daily-forecast__wind">Wind: ${day.day.maxwind_kph + " km/h"}</p>
       </div>
     `;
     });
 
   let html = `
   <div class="three-days-forecast">
-    <p class="three-days-forecast__title">Vorhersage für ${forecastDays.length === 1 ? "den heutigen Tag:" : "die nächsten " + forecastDays.length + " Tage:"}</p>
+    <p class="three-days-forecast__title">Vorhersage für ${forecastDaysElements.length === 1 ? "den heutigen Tag:" : "die nächsten " + forecastDaysElements.length + " Tage:"}</p>
     <div class="three-days-forecast__days">
       ${forecastPerDay}
     </div>
@@ -173,11 +174,11 @@ function displayWeatherDetails(current, currentDay) {
     </div>
     <div class="weather-detail">
       <p class="weather-detail__key">Niederschlag</p>
-      <p class="weather-detail__value">${currentDay.day.totalprecip_mm} mm</p>
+      <p class="weather-detail__value">${current.precip_mm} mm</p>
     </div>
     <div class="weather-detail">
       <p class="weather-detail__key">UV-Index</p>
-      <p class="weather-detail__value">${currentDay.day.uv}</p>
+      <p class="weather-detail__value">${current.uv}</p>
     </div>
   </div>
   `;

@@ -33,15 +33,15 @@ body {
 }
 
 #app {
-  //background-image: url("public/sunshine.jpg");
-  //background-size: cover;
-  //background-repeat: no-repeat;
-  //background-position: center;
-  background: linear-gradient(
+  background-image: url("public/conditionImages/day/heavy_rain_day.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* background: linear-gradient(
     0deg,
     $elevation-primary-color 0%,
     $primary-color 50%
-  );
+  ); */
   min-height: 100vh;
 
   @include tabletAndMore() {
