@@ -5,6 +5,7 @@ import { roundOff } from "./utils";
 import { renderLoadingScreen } from "./loadingScreen";
 import { get24HourForecast, formatDay, formatTime } from "./utils";
 import { saveToFavorites } from "./saveFavorites";
+import { getConditionImagePath } from "./conditions";
 
 export async function loadDetailView(enteredLocation) {
   renderLoadingScreen("Lade das Wetter für " + enteredLocation + "...");
@@ -17,6 +18,12 @@ export async function loadDetailView(enteredLocation) {
 function renderDetailView(weatherData) {
   const { location, current, forecast } = weatherData;
   const currentDay = forecast.forecastday[0];
+
+  rootEl.style.backgroundImage = displayBackgroundImage(
+    currentDay,
+    location,
+    current,
+  );
 
   rootEl.innerHTML =
     displayActionButtons() +
@@ -36,6 +43,31 @@ function renderDetailView(weatherData) {
     displayWeatherDetails(current, currentDay);
 
   applyActionsEventlistener(location.name);
+}
+
+function displayBackgroundImage(currentDay, localtime, condition) {
+  const sunset = new Date(
+    currentDay.date + " " + currentDay.astro.sunset,
+  ).getTime();
+  const sunrise = new Date(
+    currentDay.date + " " + currentDay.astro.sunrise,
+  ).getTime();
+  const localTime = new Date(localtime.localtime).getTime();
+
+  let timeOfDay = 0;
+
+  if (localTime > sunrise && localTime < sunset) {
+    timeOfDay = 0; //Day
+  } else if (localTime < sunrise || localTime > sunset) {
+    timeOfDay = 1; //Night
+  }
+
+  const url =
+    "url(public/" +
+    getConditionImagePath(condition.condition.code, timeOfDay) +
+    ")";
+
+  return url;
 }
 
 function displayActionButtons() {

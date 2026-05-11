@@ -3,4 +3,7 @@ import { loadDetailView } from "./detailView";
 
 export const rootEl = document.getElementById("app");
 
-loadDetailView("Birmingham");
+loadDetailView("Ponta Delgada");
+
+//Karachi
+//Ponta Delgada

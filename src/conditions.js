@@ -1,7 +1,7 @@
 export function getConditionImagePath(code, isNight = !1) {
   const condition = CONDITION_IMAGES.find((cond) => cond.code === code);
   return condition
-    ? "/wetter-app/conditionImages/" + condition[isNight ? "night" : "day"]
+    ? "conditionImages/" + condition[isNight ? "night" : "day"]
     : null;
 }
 const CONDITION_IMAGES = [
