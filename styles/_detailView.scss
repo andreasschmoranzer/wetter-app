@@ -1,0 +1,132 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 2rem;
+
+  &__return,
+  &__favorites {
+    background-color: transparent;
+    border: none;
+    filter: drop-shadow($text-shadow);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__return-icon,
+  &__favorites-icon {
+    stroke: white;
+    height: 2rem;
+  }
+}
+
+.current-weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  //ggf. dann wieder rausnehmen.
+  //padding-top: 2rem;
+  margin-bottom: 2rem;
+  text-shadow: $text-shadow;
+
+  &__location {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  &__current-temperature {
+    font-size: 4rem;
+  }
+}
+
+.todays-forecast {
+  @include cardContainer();
+  @include cardDesign();
+
+  &__summary {
+    @include cardHeading();
+  }
+
+  &__hours {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    cursor: grab;
+  }
+}
+
+.hourly-forecast {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.7rem;
+
+  &__icon {
+    pointer-events: none;
+  }
+}
+
+.three-days-forecast {
+  @include cardContainer();
+  @include cardDesign();
+
+  &__title {
+    @include cardHeading();
+  }
+
+  &__days {
+    display: flex;
+    flex-direction: column;
+    gap: $card-heading-gap;
+  }
+}
+
+.daily-forecast {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  //justify-content: space-between;
+  gap: 0.7rem;
+
+  &__day,
+  &__icon,
+  &__max-temperature,
+  &__min-temperature {
+    width: 2.7rem;
+  }
+
+  &:not(:last-of-type) {
+    border-bottom: $border-bottom;
+    padding-bottom: $card-heading-gap;
+  }
+}
+
+.weather-details {
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  padding-bottom: 2rem;
+}
+
+.weather-detail {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  @include cardDesign();
+
+  &__value {
+    font-size: 1.5rem;
+  }
+}

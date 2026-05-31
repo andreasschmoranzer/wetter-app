@@ -1,0 +1,64 @@
+@use "variables" as *;
+@use "mixins" as *;
+@use "mainMenu";
+@use "loadingScreen";
+@use "detailView";
+
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  user-select: none;
+  -drag: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+  // width: 0;
+}
+
+body {
+  background-color: rgb(237, 241, 250);
+  color: $text-color;
+  font-family: "Google Sans Flex", sans-serif;
+  font-size: $text-size;
+
+  @include tabletAndMore() {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+#app {
+  background: linear-gradient(
+    0deg,
+    $elevation-primary-color 0%,
+    $primary-color 50%
+  );
+  min-height: 100vh;
+
+  @include tabletAndMore() {
+    width: 400px;
+    height: $max-height-tablet-and-more;
+    min-height: unset;
+    margin: 0 auto;
+    padding-bottom: 0;
+    border-radius: $border-radius;
+    box-shadow: 0.5px 3px 8px rgba(23, 23, 23, 0.42);
+    overflow: auto;
+    scrollbar-width: none;
+  }
+
+  &.show-background {
+    background:
+      linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+      var(--detail-condition-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}

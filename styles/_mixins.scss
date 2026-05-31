@@ -1,0 +1,27 @@
+@use "variables" as *;
+
+@mixin cardContainer() {
+  box-sizing: border-box;
+  width: 90%;
+  margin: 0 auto 2rem auto;
+  padding: 1rem;
+}
+
+@mixin cardDesign() {
+  border-radius: $border-radius;
+  box-shadow: 0.5px 1px 10px rgba(23, 23, 23, 0.2);
+  backdrop-filter: blur(40px);
+}
+
+@mixin cardHeading() {
+  width: 100%;
+  border-bottom: $border-bottom;
+  padding-bottom: $card-heading-gap;
+  margin-bottom: $card-heading-gap;
+}
+
+@mixin tabletAndMore() {
+  @media only screen and (min-width: 600px) {
+    @content;
+  }
+}
