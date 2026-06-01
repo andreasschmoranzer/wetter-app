@@ -72,13 +72,19 @@ export function formatDay(currentDate) {
   return day; */
 }
 
-export function formatTime(currentTime) {
-  const time = new Date(currentTime);
+export function formatTime(time) {
+  const sunEvent = time;
+  const sunEventWithoutSuffix = sunEvent.split(" ");
+  const [hour, minutes] = sunEventWithoutSuffix[0].split(":");
 
-  const hour = twoDigits(time.getHours());
-  const minutes = twoDigits(time.getMinutes());
+  let merchedTime = hour + ":" + minutes;
 
-  const merchedTime = hour + ":" + minutes;
+  if (sunEvent.includes("PM")) {
+    const sunset = Number(hour) + 12;
+
+    merchedTime = String(sunset) + ":" + minutes;
+    console.log(typeof merchedTime);
+  }
 
   return merchedTime;
 

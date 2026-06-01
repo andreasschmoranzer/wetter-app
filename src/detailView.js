@@ -177,6 +177,7 @@ function displayThreeDaysForecast(forecastDaysElements) {
 }
 
 function displayWeatherDetails(current, currentDay) {
+  console.log(currentDay.astro.sunset);
   return `
   <div class="weather-details">
     <div class="weather-detail">
@@ -189,11 +190,11 @@ function displayWeatherDetails(current, currentDay) {
     </div>
     <div class="weather-detail">
       <p class="weather-detail__key">Sonnenaufgang</p>
-      <p class="weather-detail__value">${formatTime(currentDay.date + " " + currentDay.astro.sunrise)} Uhr</p>
+      <p class="weather-detail__value">${formatTime(currentDay.astro.sunrise)} Uhr</p>
     </div>
     <div class="weather-detail">
       <p class="weather-detail__key">Sonnenuntergang</p>
-      <p class="weather-detail__value">${formatTime(currentDay.date + " " + currentDay.astro.sunset)} Uhr</p>
+      <p class="weather-detail__value">${formatTime(currentDay.astro.sunset)} Uhr</p>
     </div>
     <div class="weather-detail">
       <p class="weather-detail__key">Niederschlag</p>
